@@ -2,13 +2,14 @@ import React from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Button } from '../ui/button'
 import { Avatar, AvatarImage } from '../ui/avatar'
-import { LogOut, User2 } from 'lucide-react'
+import { LogOut, Menu, User2 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { setUser } from '@/redux/authSlice'
 import { toast } from 'sonner'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet'
 
 const Navbar = () => {
     const { user } = useSelector(store => store.auth);
@@ -25,16 +26,16 @@ const Navbar = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message|| "Logout failed");
         }
     }
     return (
-        <div className='bg-white'>
-            <div className='flex items-center justify-between mx-auto max-w-7xl h-16'>
+        <div className='bg-white border-b border-gray-400'>
+            <div className='flex items-center justify-between mx-auto max-w-7xl h-16 px-4'>
                 <div>
                     <h1 className='text-2xl font-bold'>Job<span className='text-[#F83002]'>Portal</span></h1>
                 </div>
-                <div className='flex items-center gap-12'>
+                <div className=' hidden md:flex items-center gap-12'>
                     <ul className='flex font-medium items-center gap-5'>
                         {
                             user && user.role === 'recruiter' ? (
@@ -50,7 +51,7 @@ const Navbar = () => {
                                 </>
                             )
                         }
-
+                            
 
                     </ul>
                     {
@@ -99,6 +100,66 @@ const Navbar = () => {
                     }
 
                 </div>
+                {/* Mobile view */}
+                <div className='md:hidden flex items-center gap-2'>
+                    {user && (
+                        <Avatar className="h-8 w-8">
+                            <AvatarImage src={user?.profile?.profilePhoto} />
+                        </Avatar>
+                    )}
+
+                    <Sheet>
+                        <SheetTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                                <Menu />
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent side="right">
+                            <SheetHeader>
+                                <SheetTitle className="text-left text-xl font-bold">
+                                    Job<span className='text-[#F83002]'>Portal</span>
+                                </SheetTitle>
+                            </SheetHeader>
+                            <div className='flex flex-col gap-5 mt-8'>
+                                <nav className='flex flex-col gap-4 font-medium text-lg'>
+                                    {user && user.role === 'recruiter' ? (
+                                        <>
+                                            <Link to="/admin/companies">Companies</Link>
+                                            <Link to="/admin/jobs">Jobs</Link>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Link to="/">Home</Link>
+                                            <Link to="/jobs">Jobs</Link>
+                                            <Link to="/browse">Browse</Link>
+                                        </>
+                                    )}
+                                </nav>
+                                {!user ? (
+                                    <div className='flex flex-col gap-3'>
+                                        <Link to="/login"><Button variant="outline" className="w-full">Login</Button></Link>
+                                        <Link to="/signup"><Button className="bg-[#6A38C2] w-full text-white">Signup</Button></Link>
+                                    </div>
+                                ) : (
+                                    <div className='flex flex-col gap-3'>
+                                        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Account</p>
+                                        <Link to="/profile" className="flex items-center gap-3 text-gray-700">
+                                            <User2 size={20}/> View Profile
+                                        </Link>
+                                        <button 
+                                            onClick={logoutHandler} 
+                                            className="flex items-center gap-3 text-red-600 font-medium"
+                                        >
+                                            <LogOut size={20}/> Logout
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </SheetContent>
+                    </Sheet>
+                                
+                </div>
+
             </div>
 
         </div>

@@ -53,7 +53,9 @@ const PostJob = () => {
                 navigate("/admin/jobs");
             }
         } catch (error) {
-            toast.error(error.response.data.message);
+            const errorMessage = error.response?.data?.message || "An unexpected error occurred";
+
+            toast.error(errorMessage);
         } finally{
             setLoading(false);
         }
