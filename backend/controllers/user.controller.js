@@ -37,6 +37,9 @@ export const register = async (req, res) => {
             profile:{
                 profilePhoto:cloudResponse.secure_url,
             }
+            // profile: {
+            //   profilePhoto: ""
+            // }
         });
 
         return res.status(201).json({
