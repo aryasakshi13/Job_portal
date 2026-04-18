@@ -64,9 +64,9 @@ const PostJob = () => {
     return (
         <div>
             <Navbar />
-            <div className='flex items-center justify-center w-screen my-5'>
-                <form onSubmit = {submitHandler} className='p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
-                    <div className='grid grid-cols-2 gap-2'>
+            <div className='flex items-center justify-center w-screen my-5 px-4'>
+                <form onSubmit = {submitHandler} className=' p-6 md:p-8 max-w-4xl w-full border border-gray-200 shadow-lg rounded-md bg-white'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <div>
                             <Label>Title</Label>
                             <Input
@@ -149,8 +149,9 @@ const PostJob = () => {
                         </div>
                         {
                             companies.length > 0 && (
+                                <div className='md:col-span-2 mt-2'>
                                 <Select onValueChange={selectChangeHandler}>
-                                    <SelectTrigger className="w-[180px]">
+                                    <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Select a Company" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -166,11 +167,17 @@ const PostJob = () => {
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
+                                </div>
                             )
                         }
                     </div> 
                     {
-                        loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Post New Job</Button>
+                        loading ? (<Button className="w-full mt-8 bg-black text-white"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> 
+
+                        ): (<Button type="submit" className="w-full mt-8 bg-black text-white hover:bg-gray-800">
+                            Post New Job
+                            </Button>
+                        )
                     }
                     {
                         companies.length === 0 && <p className='text-xs text-red-600 font-bold text-center my-3'>*Please register a company first, before posting a jobs</p>

@@ -21,7 +21,7 @@ const CompaniesTable = () => {
         setFilterCompany(filteredCompany);
     },[companies,searchCompanyByText])
     return (
-        <div className ="min-w-[600px">
+        <div className ="min-w-[600px]">
             <Table>
                 <TableCaption>A list of your recent registered companies</TableCaption>
                 <TableHeader>
