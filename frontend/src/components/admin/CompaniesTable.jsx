@@ -21,7 +21,7 @@ const CompaniesTable = () => {
         setFilterCompany(filteredCompany);
     },[companies,searchCompanyByText])
     return (
-        <div>
+        <div className ="min-w-[600px">
             <Table>
                 <TableCaption>A list of your recent registered companies</TableCaption>
                 <TableHeader>
@@ -37,7 +37,7 @@ const CompaniesTable = () => {
                         filterCompany?.map((company) => (
                             <tr>
                                 <TableCell>
-                                    <Avatar>
+                                    <Avatar className="h-10 w-10">
                                         <AvatarImage src={company.logo}/>
                                     </Avatar>
                                 </TableCell>
